@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+
+# 差分ビルドを記録するファイル
+tsconfig.tsbuildinfo
+
+node_modules/
+# ビルドしたファイルが出力される
+build/
+# React Router v7 の定義ファイルが出力される
+.react-router/
+# Wrangler の設定ファイルが出力される
+.wrangler/
