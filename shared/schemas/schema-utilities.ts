@@ -10,7 +10,7 @@ export const preprocessMultiLinesString = (value: unknown): unknown => value == 
 
 /** Boolean に類する `value` をできるだけ Number に揃える Preprocessor */
 export const preprocessBooleanNumber = (value: unknown): unknown => {
-  if(typeof value === 'number') return booleanNumberValues.includes(value as BooleanNumber) ? value : value;  // 結局変わらないけどとりあえず…
+  if(typeof value === 'number') return booleanNumberValues.includes(value as BooleanNumber) ? value : value;
   if(typeof value === 'boolean') return value ? booleanNumberTrue : booleanNumberFalse;
   if(typeof value === 'string') {
     const normalized = value.trim().toLowerCase();

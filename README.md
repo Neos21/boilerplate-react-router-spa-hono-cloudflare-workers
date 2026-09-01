@@ -2,12 +2,37 @@
 
 React Router (SPA モード) + Hono + Cloudflare Workers プロジェクトのボイラープレート。
 
-サンプルコードには `example`・`examples` の記載がある他、隅付き括弧を用いたプレースホルダを記載している。
+
+## サンプルとしての機能
+
+サンプルコードには `example`・`examples` の命名・記載がある他、隅付き括弧を用いたプレースホルダを記載している。
+
+`/api/login` エンドポイントおよび `index.tsx` に、JWT を発行するログイン認証の簡易サンプルを付属している。簡単のため、クライアントでは LocalStorage に JWT を保管している点に留意。
+
+### 主な説明用サンプルファイル (実コードからは削除して良い)
+
+- `server/repositories/examples-repository.ts`
+- `server/routes/api/examples/`
+- `shared/schemas/example-schema.ts`
+- `shared/schemas/example-schema.test.ts`
+- `shared/services/example-service.ts`
+- `shared/types/app/example-display.ts`
+- `shared/types/entities/example.ts`
+
+### 実コード作成時に用意する必要があるファイル
+
+- `.dev.vars` (`.dev.vars.example` を参考に `hono-bindings.ts` と揃うように作成する)
+- `public/favicon.ico`
+- `public/apple-touch-icon.png`
+- `public/icon-192.png`
+- `public/icon-512.png`
+    - 画像類は `public/manifest.webmanifest` と `root.tsx` でファイル名を参照している点に留意
 
 
 ## 技術スタック
 
 - フロントエンド : React + React Router (SPA モード)
+    - `isbot` パッケージは React Router が必須で入れてくるため、SPA モードでは使用しない想定だが `package.json` に記述が残る
 - UI : Tailwind CSS + daisyUI
 - State 管理 : Zustand
 - HTTP クライアント : ky
@@ -16,7 +41,10 @@ React Router (SPA モード) + Hono + Cloudflare Workers プロジェクトの�
 - ビルドツール : Vite
 - 実行環境 : Cloudflare Workers
 - DB : Cloudflare D1 (SQLite)
-- 認証 : サンプルプロジェクトのため、環境変数に注入したパスワードと照合して JWT を発行し、LocalStorage に保持する
+- Linter・Formatter : ESLint
+    - セットアップで用いるため `globals` パッケージを導入している
+    - 動作のために `jiti` パッケージが必要なため `package.json` に記載アリ
+- ユニットテストツール : Vitest
 
 
 ## 開発の開始

@@ -51,7 +51,7 @@ export default defineConfig([
     }
   },
   
-  // オレオレルール
+  // プロジェクト固有ルール
   neosEslintPlugin.configs.recommended,
   
   // React 向けルール

@@ -16,7 +16,6 @@ Browser
 - React Router を SPA モードで利用し、画面遷移とログイン後の共通レイアウトを構成する
 - Hono の `/api` 配下に認証・各リソースのルートを登録する
 - Cloudflare Workers の Binding から D1 と認証用環境変数を参照する
-- 【Example】サンプルプロジェクトのため、環境変数のパスワードで JWT を発行し、クライアントでは LocalStorage で保管する
 
 
 ## ディレクトリの責務
@@ -64,6 +63,5 @@ server/services -> shared/services
 ## 横断的な設計
 
 - 整合性はサーバ側で保証し、不可分な複数書き込みは一つのユースケースとして扱う
-- 認証は単一ユーザ向け JWT 認証とし、クライアントの認証状態は永続化する
 
 API の契約は [API](./docs/api.md)、各領域の具体的な実装規則は [Agent Rules](./docs/agent-rules/README.md) を参照のこと。

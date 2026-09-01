@@ -4,7 +4,7 @@
   "include": [
     // 基本的には全ファイルを指定する
     "**/*",
-    // React Router v7 が出力する型ファイルも対象にする
+    // React Router が出力する型ファイルも対象にする
     ".react-router/types/**/*"
   ],
   "compilerOptions": {

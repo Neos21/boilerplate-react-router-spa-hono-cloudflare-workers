@@ -37,7 +37,7 @@ examples.post('/', async context => {
   const body = await context.req.json().catch(() => null);
   if(body == null) return context.json({ error: invalidRequestBodyErrorMessage }, httpStatusCode.badRequest);
   
-  const parsed = exampleSchema.safeParse(body);
+  const parsed = exampleSchema.partial().safeParse(body);
   if(!parsed.success) return context.json({ error: mergeIssues(parsed.error) }, httpStatusCode.badRequest);
   
   const id = await new ExamplesRepository(context.env.DB).create(parsed.data);

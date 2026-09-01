@@ -7,7 +7,7 @@ import { authenticationRedirectReasonLogout, authenticationRedirectReasonRelogin
 import { useAdminStore } from './stores/admin-store';
 import { isEmpty } from '../shared/helpers/is-empty';
 
-// NOTE : `$ npx react-router typegen` で `./.react-router/` 配下に型定義が出力される (開発時は自動的に出力される) コレを参照するのが `./+types/` という書き方 https://eiji.page/blog/react-router-dynamic-meta/
+// NOTE : `$ npx react-router typegen` で `./.react-router/` 配下に出力される型定義 (開発時は自動的に出力される) を参照するのが `./+types/` という書き方 https://eiji.page/blog/react-router-dynamic-meta/
 import type { Route } from './+types/root';
 
 import './styles.css';

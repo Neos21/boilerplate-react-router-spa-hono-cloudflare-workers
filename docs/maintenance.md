@@ -32,7 +32,7 @@ export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 ```
 
 ```tsx
-{/* daisyUI 提供のクラス、TailwindCSS 提供のクラス、条件に基づいたクラス指定、といった形で記述を別け、それぞれの中でソートが行われる */}
+{/* daisyUI 提供のクラス、TailwindCSS 提供のクラス、条件に基づいたクラス指定、といった形で記述を分け、それぞれの中でソートが行われる */}
 <div className={cn(
   'alert alert-warning',
   'mb-4 text-sm',

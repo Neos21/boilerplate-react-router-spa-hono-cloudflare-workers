@@ -17,6 +17,6 @@ import { api, apiPath } from './routes/api/api';
  */
 export default await createHonoServer({
   configure(app) {
-    app.route(apiPath, api);  // `routes/` ディレクトリ配下は URI パスとディレクトリ階層を揃えるため `/api` 配下からクラスを別けて作る
+    app.route(apiPath, api);  // `routes/` ディレクトリ配下は URI パスとディレクトリ階層を揃えるため `/api` 配下からクラスを分けて作る
   }
 });

@@ -17,7 +17,7 @@ export class ExamplesRepository {
   /** 指定した ID に一致する1件を取得する・存在しない場合は `null` を返す */
   public async findById(id: number): Promise<Example | null> {
     return await this.db
-      .prepare(`SELECT id, name, memo, is_active FROM example WHERE id = ? LIMIT 1`)
+      .prepare(`SELECT id, name, memo, is_active FROM examples WHERE id = ? LIMIT 1`)
       .bind(id)
       .first<Example>();
   }
