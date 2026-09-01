@@ -1,18 +1,38 @@
-import { defineConfig } from 'vite';
+import { cloudflare } from '@cloudflare/vite-plugin';
 import { reactRouter } from '@react-router/dev/vite';
-import serverAdapter from 'hono-react-router-adapter/vite';
-import cloudflareAdapter from '@hono/vite-dev-server/cloudflare';
+import tailwindcss from '@tailwindcss/vite';
+import { reactRouterHonoServer } from 'react-router-hono-server/dev';
+import { defineConfig } from 'vite';
 
+/** Vite 設定 */
 export default defineConfig({
   plugins: [
-    // React Router v7 を Vite で動作させるプラグイン
-    reactRouter(),
-    // Hono と React Router v7 を Vite 内で統合させるプラグイン
-    serverAdapter({
-      // `wrangler.jsonc` で指定した Bindings を取り込めるようにするアダプタ
-      adapter: cloudflareAdapter,
+    // Vite に Cloudflare Workers ランタイムを統合するプラグイン https://developers.cloudflare.com/workers/vite-plugin/
+    cloudflare({
+      viteEnvironment: {
+        name: 'ssr'
+      }
+    }),
+    // TailwindCSS プラグイン
+    tailwindcss(),
+    // Hono + React Router 構成を認識させるプラグイン・`reactRouter()` より手前に置くこと
+    reactRouterHonoServer({
+      // ランタイム指定
+      runtime: 'cloudflare',
       // Hono サーバのエントリポイント
-      entry: './server/index.ts'
-    })
-  ]
+      serverEntryPoint: './server/index.ts'
+    }),
+    // React Router プラグイン
+    reactRouter()
+  ],
+  build: {
+    rollupOptions: {
+      // フロントエンドのビルド資材の命名ルールを変更する
+      output: {
+        entryFileNames: `assets/entry-[hash].js`,
+        chunkFileNames: `assets/chunk-[hash].js`,
+        assetFileNames: `assets/asset-[hash].[ext]`
+      }
+    }
+  }
 });

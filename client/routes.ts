@@ -1,9 +1,11 @@
-// React Router v7 ではこのファイル名指定
+// Example : React Router によりこのファイル名であることが必要
 
-import { type RouteConfig, index, route } from '@react-router/dev/routes';
+import { index, layout, route, type RouteConfig } from '@react-router/dev/routes';
 
-// React Router v7 のルーティング定義
+/** クライアントルート定義 */
 export default [
-  index('./routes/_index.tsx'),
-  route('about', './routes/about.tsx')
+  index('./pages/index/index.tsx'),
+  layout('./layouts/admin-layout.tsx', [
+    route('/home', './pages/home/home.tsx')
+  ])
 ] satisfies RouteConfig;

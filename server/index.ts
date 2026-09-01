@@ -1,8 +1,22 @@
-import { Hono } from 'hono';
+import { createHonoServer } from 'react-router-hono-server/cloudflare';
 
-const app = new Hono();
+import { api, apiPath } from './routes/api/api';
 
-app.get('/api', context => context.json({ message: 'Hello API' }));
-
-// `wrangler.jsonc` や `vite.config.ts` で指定しているエントリファイルなので `export default` でエクスポートする
-export default app;
+/**
+ * `wrangler.jsonc` や `vite.config.ts` にてエントリポイントと識別するため Default Export が必須
+ * 
+ * NOTE : `$ vite dev` コマンドで認識させるため `createHonoServer()` でのラップが必要・以下のようなコードでは動かない
+ * 
+ * ```typescript
+ * import { Hono } from 'hono';
+ * import type { HonoBindings } from './types/hono-bindings';
+ * const app = new Hono<{ Bindings : HonoBindings; }>();
+ * app.route(apiPath, api);
+ * export default app;
+ * ```
+ */
+export default await createHonoServer({
+  configure(app) {
+    app.route(apiPath, api);  // `routes/` ディレクトリ配下は URI パスとディレクトリ階層を揃えるため `/api` 配下からクラスを別けて作る
+  }
+});
