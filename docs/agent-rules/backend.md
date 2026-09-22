@@ -13,8 +13,6 @@
 - 複数テーブルを横断する Read Model とビジネスロジックは `server/services/` に置く
 - サーバ内部だけで使う JOIN 行などの型は `server/types/` に置く
 
-責務境界の詳細は [ARCHITECTURE.md](../../ARCHITECTURE.md) を参照のこと。
-
 
 ## 複数書き込み
 
@@ -30,8 +28,11 @@
 
 ## Route Controller
 
+- Route は HTTP の責務に限定し、DB クエリやビジネスロジックを直接持たない
 - `context.req.json()` は `await context.req.json().catch(() => null)` で受ける
 - `body == null` の場合は 400 エラーを返す
-- 正常レスポンスはトップレベルを `result` のみ、エラーは `error` のみとする
+- JSON ボディの構文不正と Schema 不正を区別せず、いずれもクライアント入力エラーとして 400 を返す
+- 正常レスポンスはトップレベルを `result` のみ、エラーレスポンスはトップレベルを `error` のみとする
 - ルートパス文字列に `/:id` のようなコロンを含む場合は、`// eslint-disable-line neos-eslint-plugin/comment-colon-spacing` を付ける
+- URL の ID は整数に変換できない場合に 400 を返す
 - ID・Query・Body は Route で検証し、DB 状態を伴う業務条件は Service でも検証する

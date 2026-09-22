@@ -64,4 +64,4 @@ server/services -> shared/services
 
 - 整合性はサーバ側で保証し、不可分な複数書き込みは一つのユースケースとして扱う
 
-API の契約は [API](./docs/api.md)、各領域の具体的な実装規則は [Agent Rules](./docs/agent-rules/README.md) を参照のこと。
+各領域の具体的な実装規則は [Agent Rules](./docs/agent-rules/README.md) を参照のこと。
