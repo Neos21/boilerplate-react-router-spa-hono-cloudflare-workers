@@ -6,4 +6,3 @@ CREATE TABLE examples (  -- Example
   memo        TEXT,                                                     -- 自由入力項目
   is_active   INTEGER  NOT NULL  DEFAULT 1 CHECK (is_active IN (0, 1))  -- Boolean 相当の項目のサンプル
 );
-
