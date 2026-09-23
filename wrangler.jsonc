@@ -14,13 +14,19 @@
     // ビルド後のクライアント資材 (`index.html` など) があるディレクトリを指定する
     "directory": "./build/client",
     // 見つからないパスは `index.html` を返す `single-page-application` モードを指定する https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    // バインディング名
+    "binding": "ASSETS",
+    // Workers を先に動かすパス
+    "run_worker_first": [
+      "/api/*"
+    ]
   },
   // D1 連携
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "example",
+      "database_name": "【example】",
       "database_id": "【Database ID】"
     }
   ],

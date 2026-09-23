@@ -2,7 +2,9 @@
 @import "tailwindcss";
 
 /* daisyUI を使用する */
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default;  /* ライトテーマのみにする */
+}
 
 :root {
   --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP", Meiryo, sans-serif, "Apple Color Emoji", "Noto Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -23,4 +25,14 @@ body {
 /* daisyUI のモーダルの不具合修正 : iPhone Safari などモバイルブラウザでモーダルが画面上下にはみ出てしまう場合がある・操作バーを除いた表示領域内にモーダルを収めるよう調整する */
 .modal-box {
   max-height: calc(100svh - 1rem);
+}
+
+/* daisyUI のテーブルを調整する */
+.table {
+  & thead :is(th, td) {
+    @apply whitespace-nowrap;
+  }
+  & tbody :is(th, td) {
+    @apply align-top;
+  }
 }

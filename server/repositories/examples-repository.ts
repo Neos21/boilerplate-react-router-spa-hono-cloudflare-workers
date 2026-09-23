@@ -9,7 +9,7 @@ export class ExamplesRepository {
   /** 一覧取得する */
   public async findAll(): Promise<Array<Example>> {
     const result = await this.db
-      .prepare('SELECT id, name, memo, is_active FROM examples ORDER BY id ASC')
+      .prepare('SELECT id, name, memo, is_active, created_at, updated_at FROM examples ORDER BY id ASC')
       .all<Example>();
     return result.results ?? [];
   }
@@ -17,7 +17,7 @@ export class ExamplesRepository {
   /** 指定した ID に一致する1件を取得する・存在しない場合は `null` を返す */
   public async findById(id: number): Promise<Example | null> {
     return await this.db
-      .prepare(`SELECT id, name, memo, is_active FROM examples WHERE id = ? LIMIT 1`)
+      .prepare(`SELECT id, name, memo, is_active, created_at, updated_at FROM examples WHERE id = ? LIMIT 1`)
       .bind(id)
       .first<Example>();
   }
@@ -35,16 +35,16 @@ export class ExamplesRepository {
   public async update(id: number, example: Partial<Example>): Promise<void> {
     // ID 以外の全項目を編集可能とする
     const { sets, values } = buildUpdateQuery([
-      { column: 'name'      , value: example.name       },
-      { column: 'memo'      , value: example.memo       },
-      { column: 'is_active' , value: example.is_active  }
+      { column: 'name'     , value: example.name      },
+      { column: 'memo'     , value: example.memo      },
+      { column: 'is_active', value: example.is_active }
     ]);
     
     if(sets.length === 0) return;
     
     values.push(id);
     await this.db
-      .prepare(`UPDATE examples SET ${sets.join(', ')} WHERE id = ?`)
+      .prepare(`UPDATE examples SET ${sets.join(', ')} , updated_at = CURRENT_TIMESTAMP WHERE id = ?`)
       .bind(...values)
       .run();
   }

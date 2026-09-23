@@ -1,4 +1,4 @@
-// Example : React Router によりこのファイル名であることが必要
+// NOTE : React Router によりこのファイル名であることが必要
 
 import { type ReactElement, type ReactNode, useEffect } from 'react';
 import { isRouteErrorResponse, Link, Links, Outlet, Scripts, ScrollRestoration, useLocation, useNavigate } from 'react-router';

@@ -6,11 +6,7 @@
 ## システム構成
 
 ```text
-Browser
-  └ React SPA
-     └ `/api` への HTTP リクエスト
-        └ Cloudflare Workers + Hono
-           └ Cloudflare D1 (SQLite)
+Browser → React SPA → `/api` への HTTP リクエスト → Cloudflare Workers + Hono → Cloudflare D1 (SQLite)
 ```
 
 - React Router を SPA モードで利用し、画面遷移とログイン後の共通レイアウトを構成する

@@ -12,10 +12,12 @@ describe('examples API', () => {
   it('認証済みの一覧取得リクエストに一覧データを返す', async () => {
     const expectedExamples: Array<Example> = [
       {
-        id       : 1,
-        name     : '名前',
-        memo     : null,
-        is_active: 1
+        id        : 1,
+        name      : '名前',
+        memo      : null,
+        is_active : 1,
+        created_at: '2026-01-01 00 : 00 : 00',
+        updated_at: '2026-01-02 00 : 00 : 00'
       }
     ];
     const all = vi.fn().mockResolvedValue({ results: expectedExamples });

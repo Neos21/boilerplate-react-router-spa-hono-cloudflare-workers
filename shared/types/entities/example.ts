@@ -10,4 +10,8 @@ export type Example = {
   memo: string | null | undefined;
   /** 有効・無効のような Boolean での状態を表すサンプル : SQLite には Boolean 型がなく 0・1 で示すため専用型を用意している */
   is_active: BooleanNumber;
+  /** 初回登録日時 */
+  created_at: string | null | undefined;
+  /** 最終更新日時 */
+  updated_at: string | null | undefined;
 };

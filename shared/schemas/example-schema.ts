@@ -31,5 +31,7 @@ export const exampleSchema = z.object({
   is_active : z.preprocess(
                 preprocessBooleanNumber,  // Boolean な値を整形する
                 z.union([z.literal(booleanNumberFalse), z.literal(booleanNumberTrue)], { error: zodErrorMessages.booleanNumber(isActiveDisplayName) })
-              )
+              ),
+  created_at: z.string().nullish(),
+  updated_at: z.string().nullish()
 });
