@@ -15,7 +15,6 @@ React Router (SPA モード) + Hono + Cloudflare Workers プロジェクトの�
 - `server/routes/api/examples/`
 - `shared/schemas/example-schema.ts`
 - `shared/schemas/example-schema.test.ts`
-- `shared/services/example-service.ts`
 - `shared/types/app/example-display.ts`
 - `shared/types/entities/example.ts`
 

@@ -1,4 +1,4 @@
-// NOTE : React Router によりこのファイル名であることが必要
+// NOTE : React Router によりこのファイル名が必須
 
 import { type ReactElement, type ReactNode, useEffect } from 'react';
 import { isRouteErrorResponse, Link, Links, Outlet, Scripts, ScrollRestoration, useLocation, useNavigate } from 'react-router';
@@ -7,8 +7,7 @@ import { authenticationRedirectReasonLogout, authenticationRedirectReasonRelogin
 import { useAdminStore } from './stores/admin-store';
 import { isEmpty } from '../shared/helpers/is-empty';
 
-// NOTE : `$ npx react-router typegen` で `./.react-router/` 配下に出力される型定義 (開発時は自動的に出力される) を参照するのが `./+types/` という書き方 https://eiji.page/blog/react-router-dynamic-meta/
-import type { Route } from './+types/root';
+import type { Route } from './+types/root';  // NOTE : `$ npx react-router typegen` で `./.react-router/` 配下に出力される型定義 (開発時は自動的に出力される) を参照する https://eiji.page/blog/react-router-dynamic-meta/
 
 import './styles.css';
 

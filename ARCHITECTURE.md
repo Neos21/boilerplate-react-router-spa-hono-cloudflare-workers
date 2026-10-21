@@ -11,49 +11,64 @@ Browser → React SPA → `/api` への HTTP リクエスト → Cloudflare Work
 
 - React Router を SPA モードで利用し、画面遷移とログイン後の共通レイアウトを構成する
 - Hono の `/api` 配下に認証・各リソースのルートを登録する
-- Cloudflare Workers の Binding から D1 と認証用環境変数を参照する
+- Cloudflare Workers の Binding から D1 と環境変数を参照する
 
 
 ## ディレクトリの責務
 
-| ディレクトリ           | 責務                                                                             |
-|------------------------|----------------------------------------------------------------------------------|
-| `client/`              | React のページ、レイアウト、クライアント State、API 呼び出し、表示用ヘルパー     |
-| `server/routes/`       | HTTP 入出力、認証、パラメータ・リクエスト検証、レスポンスへの変換                |
-| `server/repositories/` | D1 の単一テーブルに対する CRUD                                                   |
-| `server/services/`     | 複数テーブルを横断する Read Model と、複数 Repository を組み合わせるユースケース |
-| `server/types/`        | JOIN 直後の SQL 行など、サーバ内部だけで使う型                                   |
-| `shared/constants/`    | Client・Server で共有する定数                                                    |
-| `shared/helpers/`      | 業務知識を持たない共有処理                                                       |
-| `shared/schemas/`      | API と画面で共有する Zod Schema                                                  |
-| `shared/services/`     | Client・Server の両方から利用するビジネスロジック                                |
-| `shared/types/`        | Entity、画面・API 用の合成型、汎用型                                             |
+| ディレクトリ           | 責務                                          |
+|------------------------|-----------------------------------------------|
+| `shared/constants/`    | Server・Client で共通利用する定数             |
+| `shared/helpers/`      | Server・Client で共通利用する処理             |
+| `shared/schemas/`      | Server・Client で共通利用する Zod スキーマ    |
+| `shared/types/`        | Server・Client で共通利用する型定義           |
+| `shared/services/`     | Client・Server で共通利用するビジネスロジック |
+| `shared/constants/`    | サーバ内部だけで使う定数                      |
+| `shared/helpers/`      | サーバ内部だけで使う共通処理                  |
+| `server/types/`        | SQL 行など、サーバ内部だけで使う型            |
+| `server/routes/`       | ルーティングコントローラ                      |
+| `server/services/`     | ビジネスロジック                              |
+| `server/repositories/` | DB に対する CRUD                              |
+| `client/constants/`    | クライアント内部だけで使う定数                |
+| `client/helpers/`      | クライアント内部だけで使う共通処理            |
+| `client/stores/`       | Zustand ストア                                |
+| `client/layouts/`      | レイアウトコンポーネント                      |
+| `client/pages/`        | ページコンポーネント                          |
+| `client/components/`   | 複数画面で利用するコンポーネント              |
+| `public/`              | 静的アセット                                  |
+| `migrations/`          | DB 操作するためのマイグレーション SQL         |
 
 
 ## 依存方向
 
 ```text
-client ┐
+server ┐
        ├─> shared
-server ┘
+client ┘
 
 server/routes   -> server/repositories (単一テーブルの単純な CRUD)
-server/routes   -> server/services     (複合 Read Model・ユースケース)
-server/services -> server/repositories または D1
+server/routes   -> server/services     (複合テーブル・ユースケース)
+server/services -> server/repositories
 server/services -> shared/services
 ```
 
-- `shared/` は `client/`・`server/` に依存しない
-- Route は HTTP の責務に限定し、DB クエリやビジネスロジックを直接持たない
-- Repository は単一テーブルの永続化を抽象化し、画面都合の複合 `JOIN` を持たない
-- 複数テーブルを横断した Read Model は、用途名を持つ Service が D1 から直接構築する
+- `shared/` は `server/`・`client/` に依存しない
+- `client/`・`server/` はそれぞれ `shared/` への依存はできる。`client/` と `server/` は互いに依存しない
 
+### サーバサイドにおけるルーティングコントローラの配置
 
-## レイヤーの境界
+- `server/index.ts` に Hono のエントリポイントが宣言されている
+- `server/routes/` 配下にルーティングコントローラのファイルを配置するが、このディレクトリ以下は「ディレクトリ階層 = API パス」で一致するようにする
+- よって各種 API は `server/routes/api/` 配下に配置され、実質的なエントリポイントは `server/routes/api/api.ts` となる
 
-`shared/` には `client/`・`server/` 間で共有する契約と処理を置き、サーバ内部だけで扱う DB 取得直後の表現は `server/` に閉じる。複合 Read Model は Service が公開可能なモデルに変換してから Route に渡す。
+### クライアントにおけるコンポーネントの配置
 
-型の分類と配置に関する実装ルールは [Shared Rules](./docs/agent-rules/shared.md)、サーバ各層の実装ルールは [Backend Rules](./docs/agent-rules/backend.md) を参照のこと。
+- `client/pages/` 配下に「ページコンポーネント」を配置するが、このディレクトリ以下は「ディレクトリ階層 = `client/routes.ts` で定義したページパス」で一致するようにする
+- `client/routes.ts` で定義しているページコンポーネントは React Router の仕様上 `default export` が必須なため `function Example(): ReactElement` で定義するが、コンポーネントは `export const Example = (): ReactElement => {};` で定義する
+- 複数ページで共通利用するコンポーネントは `client/components/` 配下に配置する
+    - 1つのコンポーネントが内部的に複数コンポーネントに分けて実装している場合、`client/components/example/` とサブディレクトリを作成し、内部的なコンポーネントは `client/components/example/components/` ディレクトリへと隠蔽する
+- 1ページでのみ利用するコンポーネントは `client/pages/` 配下に `components/` ディレクトリを作って配置する (例 : `client/pages/index/components/example.tsx` のような階層)
+    - ヘルパー関数についても1ページでのみ利用するモノは `client/pages/` 配下に `helpers/` ディレクトリを作り、`client/helpers/` 直下を肥大化させないようにして良い
 
 
 ## 横断的な設計

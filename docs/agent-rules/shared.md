@@ -12,17 +12,21 @@
 - `app/` : 画面・API・業務ロジックで使う合成型
 
 
-## Schema
+## スキーマ
 
-- 入力バリデーションは `client/`・`server/` で共有する Zod Schema を使う
-- 空文字チェックが必要な場合は `isEmpty()` を使い、個別に `=== ''` を重複させない
+- 入力バリデーションは `server/`・`client/` で共有する Zod スキーマを使う
+- オブジェクトは通常の `z.object()` で定義する。`strictObject()` は使わず、未知のプロパティは拒否せずパース結果から除去する
+- 空文字チェックが必要な場合は `isEmpty()` を使い、個別に `== null` や `=== ''` などを重複させない
 - 業務上の上限・下限は共有定数を参照する
-- 更新用 Schema は、対象操作で変更を許可する項目だけに限定する
+- 必須入力を表す `.min(1)` の `1` は定数化せずスキーマに直接記述する
+- 更新用スキーマは、対象操作で変更を許可する項目だけに限定する
+- オブジェクト全体の定義以外の各検証には、可能な限り `error` を指定して `zodErrorMessages` を活用する
+- 正の数の検証は `.positive()` ではなく `.min(1)` を使う
 
 
 ## Helper と Service
 
-- 業務知識を持たない整形・判定処理は `shared/helpers/` に置く
-- `client/`・`server/` の両方で使うビジネスロジックは `shared/services/` に置く
+- 業務知識を持たない整形・判定処理は `shared/helpers/` に置き、Helper は `export const` で関数を定義する
+- `server/`・`client/` の両方で使うビジネスロジックは `shared/services/` に置き、Service は `export class` で定義する
 - SQL、画面、Server Service に同じビジネスロジックを重複実装しない
 - 計算途中の値と表示用の丸めを分離する

@@ -1,6 +1,6 @@
 # ADR : Architecture Decision Records (アーキテクチャ意思決定記録)
 
-将来も参照する価値がある設計上の選択と、その理由・影響を記録する。現行仕様そのものは `README.md`、`ARCHITECTURE.md`、Domain、Feature 文書に記載し、ADR には「なぜその方式を選んだか」を残す。
+将来も参照する価値がある設計上の選択と、その理由・影響を記録する。現行仕様そのものは [README.md](../../README.md)、[ARCHITECTURE.md](../../ARCHITECTURE.md)、[domain.md](../domain.md)、[features/](../features/README.md) 文書等に記載し、ADR には「なぜその方式を選んだか」を残す。
 
 
 ## 一覧

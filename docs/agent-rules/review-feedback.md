@@ -5,14 +5,14 @@
 
 ## 指摘の分類
 
-1. ESLint、型、Schema、テストで機械的に防げる
+1. ESLint、型、スキーマ、テストで機械的に防げる
     - 文書ルールを追加する前に自動化を検討する
 2. 複数タスクで再発しうる全体ルール
     - 既存ルールを更新し、適切な Agent Rule に統合する
 3. 特定領域だけに適用される
-    - Frontend、Backend、Shared、Documentation の該当ファイルに追加する
+    - Shared、Server、Client、ドキュメンテーションの該当ファイルに追加する
 4. 設計判断と理由を残す必要がある
-    - Architecture (`ARCHITECTURE.md`) または ADR (`docs/decisions/`) に記録する
+    - [ARCHITECTURE.md](../../ARCHITECTURE.md) または ADR ([docs/decisions/](../decisions/README.md)) に記録する
 5. 今回だけの入力ミス・単発判断
     - 恒久ルールに追加しない
 

@@ -4,7 +4,7 @@ import { preprocessBooleanNumber, preprocessMultiLinesString, preprocessOneLineS
 import { booleanNumberFalse, booleanNumberTrue } from '../constants/boolean-constants';
 import { isEmpty } from '../helpers/is-empty';
 
-// Example : 画面表示時に同じ文言を使用できるように `export` してある想定
+// 画面表示時に同じ文言を使用できるように `export` する
 export const idDisplayName        = 'ID'           as const;
 export const nameDisplayName      = '必須入力項目' as const;
 export const memoDisplayName      = '自由入力項目' as const;

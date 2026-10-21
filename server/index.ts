@@ -13,13 +13,5 @@ app.route(apiPath, api);  // `routes/` ディレクトリ配下は URI パスと
  * `wrangler.jsonc` や `vite.config.ts` にてエントリポイントと識別するため Default Export が必須
  * 
  * NOTE : `$ vite dev` コマンドで認識させるため `createHonoServer()` でのラップが必要・以下のようなコードでは動かない
- * 
- * ```typescript
- * import { Hono } from 'hono';
- * import type { HonoBindings } from './types/hono-bindings';
- * const app = new Hono<{ Bindings : HonoBindings; }>();
- * app.route(apiPath, api);
- * export default app;
- * ```
  */
 export default await createHonoServer({ app });
